@@ -17,7 +17,7 @@ WHERE   department_id = 100;
 
 -- SUBSTR(column, 시작위치, 글자수) > 입력 된 문자열에서 특정길이의 문자열 출력
 -- 양수 > 왼쪽에서 오른쪽으로..
--- 양수 > 오른쪽에서 왼쪽으로..
+-- 음수 > 오른쪽에서 왼쪽으로..
 SELECT  first_name,
         SUBSTR(first_name,3),-- 3번재부터 끝까지의 문자 출력
         SUBSTR(first_name,1,3),-- 1번Woqnxj 3개의 문자 출력
@@ -87,7 +87,7 @@ SELECT  LAST_DAY('19/06/06'),
 FROM    dual;
 
 -- #변환함수
--- TO_CHAR(숫자, '출력형식') > 숫자형을 문자형으로 변환
+-- TO_CHAR(숫자, '숫자형식') > 숫자형을 특정 형식으로 변환
 SELECT  first_name,
         salary,
         salary*12,    
@@ -98,7 +98,7 @@ WHERE   department_id = 100;
 
 -- TO_CHAR(날짜, '출력형식') > 날짜를 문자형으로 변환
 SELECT  SYSDATE,
-        TO_CHAR(SYSDATE, 'yyyy-mm-dd hh24:mi:ss'),
+        TO_CHAR(SYSDATE, 'yyyy.mm.dd hh24:mi:ss'),
         TO_CHAR(SYSDATE, 'year-month-day hh24:mi:ss')
 FROM    dual;
 
