@@ -43,7 +43,7 @@ SELECT  TRUNC(15.796,2),-- 15.796 >> 15.79
 FROM    dual;
 
 -- SYSDATE > 날짜 출력
-SELECT  SYSDATE
+SELECT  SYSDATE-- 20/12/17
 FROM    dual;
 
 -- MONTH_BETWWEN(d1, d2) > d1부터 d2 사이의 개월수 출력
@@ -54,20 +54,21 @@ SELECT  SYSDATE,
 FROM    employees;
 
 -- LAST_DAY(m) > m월의 마지막 날 출력
-SELECT  LAST_DAY(SYSDATE)-- SYSDATE: 2020.12.17
+SELECT  LAST_DAY(SYSDATE)-- SYSDATE: 2020.12.17 >> 20/12/31
 FROM    dual;
 
 -- TO_CHAR(숫자, '숫자형식') > 숫자형을 특정 형식으로 변환
 SELECT  salary,
         salary*12,
-        TO_CHAR(salary*12, '999,999,999'),
-        TO_CHAR(salary*12, '$999,999,999.00')
+        TO_CHAR(salary*12, '999,999,999'),-- 288000 >> 288,000
+        TO_CHAR(salary*12, '$999,999,999.00')-- 288000 >> $288,000.00
 FROM    employees;
 
 -- TO_CHAR(날짜, '출력형식') > 날짜를 특정 형식으로 변환
 SELECT  SYSDATE,
-        TO_CHAR(SYSDATE, 'yyyy.mm.dd hh24:mi:ss'),
+        TO_CHAR(SYSDATE, 'yyyy.mm.dd hh24:mi:ss'),-- 20/12/17 >> 2020.12.17 17:12:12
         TO_CHAR(SYSDATE, 'yyyy month day hh:mi:ss')-- yyyy를 month처럼 year(ex: 2020년)로 변환해주는 기능은 없음
+                                                   -- 2020.12.17 >> 2020 12월 목요일 05:12:12                                            
 FROM    dual;
 
 -- NVL(column, null일 때 값) > 데이터 값이 null일 경우 특정 값으로 반환
