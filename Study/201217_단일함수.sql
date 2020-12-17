@@ -101,3 +101,20 @@ SELECT  SYSDATE,
         TO_CHAR(SYSDATE, 'yyyy-mm-dd hh24:mi:ss'),
         TO_CHAR(SYSDATE, 'year-month-day hh24:mi:ss')
 FROM    dual;
+
+SELECT  first_name,
+        hire_date,
+        TO_CHAR(hire_date, 'yyyy-mm-dd hh24:mi:ss') 입사일
+FROM    employees;
+
+-- NVL(column, null일 때 값) > 데이터 값이 null인지 검사하여 null일 경우 특정 값으로 변환 
+SELECT  first_name,
+        commission_pct,
+        NVL(commission_pct,0)-- commission_pct가 null일 경우 0으로 변환
+FROM    employees;
+
+-- NVL2(column, null아닐 때 값, null일 때 값) > 데이터 값이 null인지 검사하여 null일 때와 아닐 때 특정 값으로 변환
+SELECT  first_name,
+        commission_pct,
+        NVL2(commission_pct,100,0)-- commission_pct가 null일 경우 0으로, 아닐 경우 100으로 변환
+FROM    employees;
