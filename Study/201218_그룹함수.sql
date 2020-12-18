@@ -76,7 +76,7 @@ SELECT  department_id,
         COUNT(*),
         SUM(salary)
 FROM    employees
-WHERE   SUM(salary) >= 20000-- WHEREW절은 그룹함수에 사용 불가
+WHERE   SUM(salary) >= 20000-- WHERE절은 그룹함수에 사용 불가
 GROUP BY department_id;
 
 -- HAVING > 그룹함수와 GROUP BY에 참여한 column만 출력 가능
@@ -99,7 +99,7 @@ SELECT  employee_id,
         END realSalary        
 FROM    employees;
 
--- DECODE > CASE ~ END와 동일
+-- DECODE(조건식) > CASE ~ END와 동일
 SELECT  employee_id,
         salary,
         job_id,
