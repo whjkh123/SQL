@@ -10,7 +10,7 @@ FROM    employees;
 /*
 문제 2. 
 #1 최고임금(salary)과  최저임금을 “최고임금", “최저임금”  타이틀로 출력
-#2 “최고임금 – 최저임금”이란 타이틀로 함께 출력해 보세요.
+#2 “최고임금 – 최저임금”이란 타이틀로 출력
 */
 SELECT  MAX(salary) 최고임금,
         MIN(salary) 최저임금,
@@ -28,7 +28,7 @@ FROM    employees;
 /*
 문제 4.
 #1 부서별로 평균임금, 최고임금, 최저임금을 부서아이디(department_id)와 함께 출력
-#2 정렬순서는 부서번호(department_id) 내림차순입니다.
+#2 부서번호(department_id) 내림차순 정렬
 */
 SELECT  department_id,
         ROUND(AVG(salary),2) 평균임금,
