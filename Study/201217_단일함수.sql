@@ -20,7 +20,7 @@ WHERE   department_id = 100;
 -- 음수 > 오른쪽에서 왼쪽으로..
 SELECT  first_name,
         SUBSTR(first_name,3),-- 3번재부터 끝까지의 문자 출력
-        SUBSTR(first_name,1,3),-- 1번Woqnxj 3개의 문자 출력
+        SUBSTR(first_name,1,3),-- 1번째부터 3개의 문자 출력
         SUBSTR(first_name,-3,2)-- 끝에서 3번째부터 2개의 문자 출력
 FROM    employees
 WHERE   department_id = 100;
