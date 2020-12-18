@@ -106,7 +106,7 @@ SELECT  first_name,
 FROM    employees
 ORDER BY department_id asc;
 
--- 위의 예제를 활용해 각 팀별 인원수 출력
+-- 위의 예제를 활용해 각 팀별 인원수 출력 >> 현재로썬 구현 불가
 SELECT  department_id,
         CASE    WHEN department_id BETWEEN 10 and 50    THEN 'A-TEAM'
                 WHEN department_id BETWEEN 60 and 100   THEN 'B-TEAM'
