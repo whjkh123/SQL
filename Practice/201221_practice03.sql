@@ -190,7 +190,7 @@ WHERE   e.department_id = d.department_id(+)
                                             >> A ∪ B(A와 B의 합집합) 산출(employee_id, manager_id)
                                 >> 두번째 시도 INNER JOIN employees m
                                                 ON e.manager_id = m.employee_id ↔ WHERE e.manager_id = m.employee_id WHERE문을 풀어보면, e.manager_id와 m.employee_id가 같으면 출력, 나머지 생략 즉, 교집합을 검사/산출
-                                                따라서, INNER JOIN 함으로써 e.manager_id 데이터와 m.employee_id 데이터 모두 갖는 row 값을 산출 >> manager_id 데이터를 갖지않은 'Steven' 생략
+                                                따라서, INNER JOIN 함으로써 manager_id 데이터와 employee_id 데이터 모두 갖는 row 데이터 산출 >> manager_id 데이터를 갖지않은 'Steven' 생략
                                     성공
                                             FROM A
                                             INNER JOIN B
