@@ -75,12 +75,20 @@ WHERE   e.department_id = d.department_id
 ORDER BY d.department_id asc, first_name asc;
 
 -- SELF JOIN > 자기자신과 join
-SELECT  emp.employee_id,
+SELECT  emp.employee_id 사원번호,
         emp.first_name 직업명,
-        emp.manager_id,
+        emp.manager_id 관리자번호,
         man.first_name 관리자명    
 FROM    employees emp, employees man
 WHERE   emp.manager_id = man.employee_id
+ORDER BY emp.employee_id asc;
+
+SELECT  emp.employee_id 사원번호,
+        emp.first_name 직업명,
+        emp.manager_id 관리자번호,
+        man.first_name 관리자명
+FROM    employees emp RIGHT OUTER JOIN employees man
+on      emp.manager_id = man.employee_id
 ORDER BY emp.employee_id asc;
 
 SELECT  emp.department_id 부서ID,
@@ -88,7 +96,7 @@ SELECT  emp.department_id 부서ID,
         emp.first_name 직원명,
         emp.manager_id 관리자ID,
         man.first_name 관리자명    
-FROM    employees emp LEFT OUTER JOIN employees man
+FROM    employees emp LEFT OUTER JOIN employees man-- employees.employee_id 데이터를 가진 Steven까지 출력
    ON   emp.manager_id = man.employee_id
 ORDER BY emp.employee_id asc;
 
