@@ -171,6 +171,6 @@ SELECT  e.employee_id 사번,
 FROM    employees e
 LEFT OUTER JOIN departments d
    ON   e.department_id = d.department_id
-LEFT OUTER JOIN employees m
+INNER JOIN employees m
    ON   e.manager_id = m.employee_id
 ORDER BY e.employee_id asc;
