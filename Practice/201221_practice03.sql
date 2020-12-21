@@ -163,7 +163,7 @@ WHERE   e.department_id = d.department_id(+)
         and e.manager_id = m.employee_id
 ORDER BY e.employee_id asc;
 
--- 문제 9. 복수 LEFT OUTER JOIN >> Steven도 employee_id 데이터를 갖으므로 출력 >> 이를 제거하려면?
+-- 문제 9. 복수 LEFT OUTER JOIN >> Steven도 employee_id 데이터를 갖으므로 출력 >> 이를 제거하려면? >> INNER JOIN 사용 >> 해결
 SELECT  e.employee_id 사번,
         e.first_name || ' ' || e.last_name 직원명,
         d.department_name 부서명,
@@ -174,3 +174,18 @@ LEFT OUTER JOIN departments d
 INNER JOIN employees m
    ON   e.manager_id = m.employee_id
 ORDER BY e.employee_id asc;
+/*
+WHERE   e.department_id = d.department_id(+)
+        and e.manager_id = m.employee_id
+이를 JOIN문을 사용해 재정의
+#1 e.department_id = d.department_id(+) >> LEFT OUTER JOIN departments d
+                                            ON e.department_id = d.department_id >> 각 사원의 대한 정보를 출력하기 위한것이므로 employees를 'e'로 정의해 기준으로 삼고
+                                                                                    부서명을 불러오기 위해 departments를 'd'로 정의해 조인
+#2 e.manager_id = m.employee_id >> employees.manager_id를 사용해 일반사원과 관리자를 구분
+#3 e.manager_id = m.employee_id >> 첫번째 시도 LEFT OUTER JOIN employees m
+                                                ON e.manager_id = m.employee_id >> employees를 'e'로 정의해 기준으로 삼고 SELF JOIN해 각 사원명을 manger_id에 대입하여 관리자 산출
+                                    실패 >> employees를 SELF JOIN 함으로써 manager_id 데이터는 갖지않지만(정확히는 NULL 데이터를 가졌다.), employees.employee_id 데이터를 가진 'Steven' 출력
+                                >> 두번째 시도 INNER JOIN employees m
+                                                ON e.manager_id = m.employee_id ↔ WHERE e.manager_id = m.employee_id WHERE문을 풀어보면, e.manager_id와 m.employee_id가 같으면 출력, 나머지 생략 즉, 교집합을 검사/산출
+                                                따라서, INNER JOIN 함으로써 e.manager_id 데이터와 m.employee_id 데이터 모두 갖는 row 값을 산출 >> manager_id 데이터를 갖지않은 'Steven' 생략 성공            
+*/
