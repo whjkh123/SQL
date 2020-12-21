@@ -9,12 +9,7 @@ ORDER BY d.department_id asc, first_name asc;
 SELECT  first_name,
         department_id
 FROM    employees
-WHERE   department_id is null
 ORDER BY department_id asc, first_name asc;
-
-SELECT  department_id
-FROM    departments
-ORDER BY department_id;
 
 -- 모든 직원이름, 부서이름, 업무명 을 출력
 SELECT  first_name 직원명,
@@ -27,39 +22,81 @@ WHERE   e.department_id = d.department_id
 -- LEFT OUTER JOIN > 왼쪽 테이블의 모든 row 출력
 -- RIGHT OUTER JOIN > 오른쪽 테이블의 모든 row 출력
 SELECT  e.department_id "e.부서명",
-        first_name,
+        first_name 직원명,
         d.department_id "d.부서명"
 FROM    employees e LEFT OUTER JOIN departments d
    ON   e.department_id = d.department_id
 ORDER BY d.department_id asc, first_name asc;
 
 SELECT  e.department_id "e.부서명",
-        first_name,
+        first_name 직원명,
         d.department_id "d.부서명"
 FROM    employees e, departments d           -- employees e LEFT OUTER JOIN departments d
-WHERE   e.department_id = d.department_id(+) -- ON  e.department_id = d.department_id;, null이 올 수 있는 쪽에 '+'를 붙여준다.
+WHERE   e.department_id = d.department_id(+) -- ON  e.department_id = d.department_id;, null이 올 수 있는 쪽에 '+'를 붙여준다.(ORACLE에서만 사용)
 ORDER BY d.department_id asc, first_name asc;
 
 SELECT  e.department_id "e.부서명",
-        first_name,
+        first_name 직원명,
         d.department_id "d.부서명"
 FROM    employees e RIGHT OUTER JOIN departments d
    ON   e.department_id = d.department_id
 ORDER BY d.department_id asc, first_name asc;
 
 SELECT  e.department_id "e.부서명",
-        first_name,
+        first_name 직원명,
         d.department_id "d.부서명"
 FROM    employees e, departments d           -- employees e RIGHT OUTER JOIN departments d
-WHERE   e.department_id(+) = d.department_id -- ON  e.department_id = d.department_id;, null이 올 수 있는 쪽에 '+'를 붙여준다.
+WHERE   e.department_id(+) = d.department_id -- ON  e.department_id = d.department_id;, null이 올 수 있는 쪽에 '+'를 붙여준다.(ORACLE에서만 사용)
 ORDER BY d.department_id asc, first_name asc;
 
 -- RIGHT OUTER JOIN → LEFT OUTER JOIN > 기준 변경
 SELECT  d.department_id "d.부서명",
-        first_name,
+        first_name 직원명,
         e.department_id "e.부서명"
 FROM    departments d LEFT OUTER JOIN employees e
    ON   d.department_id = e.department_id
 ORDER BY d.department_id asc, first_name asc;
 
--- FULL OUTER JOIN
+-- FULL OUTER JOIN > 왼쪽, 오른쪽 테이블의 모드 row 출력
+SELECT  e.department_id "d.부서명",
+        first_name 직원명,
+        d.department_id "e.부서명"
+FROM    employees e FULL OUTER JOIN departments d
+   ON   e.department_id = d.department_id
+ORDER BY d.department_id asc, first_name asc;
+
+-- ALIAS > employees e >> e.department_id
+SELECT  e.department_id "e.부서ID",
+        first_name 직원명,
+        department_name "부서명",
+        d.department_id "d.부서ID"
+FROM    employees e, departments d
+WHERE   e.department_id = d.department_id
+ORDER BY d.department_id asc, first_name asc;
+
+-- SELF JOIN > 자기자신과 join
+SELECT  emp.employee_id,
+        emp.first_name 직업명,
+        emp.manager_id,
+        man.first_name 관리자명    
+FROM    employees emp, employees man
+WHERE   emp.manager_id = man.employee_id
+ORDER BY emp.employee_id asc;
+
+SELECT  emp.department_id 부서ID,
+        emp.employee_id 직원ID,
+        emp.first_name 직원명,
+        emp.manager_id 관리자ID,
+        man.first_name 관리자명    
+FROM    employees emp LEFT OUTER JOIN employees man
+   ON   emp.manager_id = man.employee_id
+ORDER BY emp.employee_id asc;
+
+-- 잘못된 JOIN
+SELECT  first_name,
+        salary,
+        location_id,
+        street_address
+FROM    employees e, locations l
+WHERE   e.salary = l.location_id
+ORDER BY salary asc;
