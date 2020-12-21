@@ -157,7 +157,7 @@ ORDER BY c.region_id asc, c.country_name asc, d.department_id asc;
 SELECT  e.employee_id 사번,
         e.first_name || ' ' || e.last_name 직원명,
         d.department_name 부서명,
-        m.first_name || ' ' || m.last_name 관지라명
+        m.first_name || ' ' || m.last_name 관리자명
 FROM    employees e, departments d, employees m
 WHERE   e.department_id = d.department_id(+)
         and e.manager_id = m.employee_id
@@ -179,21 +179,25 @@ WHERE   e.department_id = d.department_id(+)
         and e.manager_id = m.employee_id
 이를 JOIN문을 사용해 재정의
 #1 e.department_id = d.department_id(+) >> LEFT OUTER JOIN departments d
-                                            ON e.department_id = d.department_id >> 각 사원에 대한 정보를 출력하기 위한 것이므로 employees를 'e'로 정의해 기준으로 삼고
-                                                                                    부서명을 불러오기 위해 departments를 'd'로 정의해 JOIN
+                                            ON e.department_id = d.department_id >> 각 사원에 대한 정보를 출력하기 위한 것이므로 'employees'를 'e'로 정의해 기준으로 삼고
+                                                                                    부서명을 불러오기 위해 'departments'를 'd'로 정의해 JOIN
 #2 e.manager_id = m.employee_id >> 첫번째 시도 LEFT OUTER JOIN employees m
-                                                ON e.manager_id = m.employee_id >> employees를 'e'로 정의해 기준으로 삼고 SELF JOIN해 각 employee_id 데이터를 manger_id에 대입하여 관리자 산출
-                                    실패 >> employees를 SELF JOIN 함으로써 manager_id 데이터는 갖지않지만(정확히는 NULL 데이터를 가졌다.), employee_id 데이터를 가진 'Steven' 출력
+                                                ON e.manager_id = m.employee_id >> 'employees'를 'e'로 정의해 기준으로 삼고
+                                                                                    SELF JOIN하여 각' m.employee_id' 데이터를 'e.manger_id'에 대입하여 관리자 산출
+                                    실패 >> 'employees e'를 SELF JOIN 함으로써 'e.manager_id' 데이터는 갖지않지만(정확히는 NULL 데이터를 가졌다.), 'm.employee_id' 데이터를 가진 'Steven' 출력
                                             FROM A
                                             LEFT OUTER JOIN B
                                             ON A.depth = B.depth
-                                            >> A ∪ B(A와 B의 합집합) 산출(employee_id, manager_id)
+                                            >> A ∪ B(A와 B의 합집합) 산출(e.manager_id, m.employee_id)
                                 >> 두번째 시도 INNER JOIN employees m
-                                                ON e.manager_id = m.employee_id ↔ WHERE e.manager_id = m.employee_id WHERE문을 풀어보면, e.manager_id와 m.employee_id가 같으면 출력, 나머지 생략 즉, 교집합을 검사/산출
-                                                따라서, INNER JOIN 함으로써 manager_id 데이터와 employee_id 데이터 모두 갖는 row 데이터 산출 >> manager_id 데이터를 갖지않은 'Steven' 생략
+                                                ON e.manager_id = m.employee_id ↔ WHERE e.manager_id = m.employee_id
+                                                WHERE문을 풀어보면, 'e.manager_id' 데이터와 'm.employee_id' 데이터가 같으면 출력, 나머지 생략
+                                                즉, 교집합을 검사 → 산출
+                                                따라서, INNER JOIN 함으로써 'e.manager_id' 데이터와 'm.employee_id' 데이터 모두 갖는 row 데이터 산출 >> 'e.manager_id' 데이터를 갖지않은 'Steven' 생략
                                     성공
                                             FROM A
                                             INNER JOIN B
                                             ON A.depth = B.depth
-                                            >> A ∩ B(A와 B의 교집합) 산출(employee_id) >> WHERE A.depth = B.depth ※JOIN ~ ON 아래에는 또다른 JOIN ~ ON문만 올 수 있다.(WHERE문 사용 불가) 
+                                            >> A ∩ B(A와 B의 교집합) 산출(m.employee_id) ↔ WHERE A.depth = B.depth
+                                            ※JOIN ~ ON문 아래에는 또다른 JOIN ~ ON문만 올 수 있다.(WHERE문 사용 불가) 
 */
