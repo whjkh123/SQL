@@ -195,5 +195,5 @@ WHERE   e.department_id = d.department_id(+)
                                             FROM A
                                             INNER JOIN B
                                             ON A.depth = B.depth
-                                            >> A ∩ B(A와 B의 교집합) 산출(employee_id)
+                                            >> A ∩ B(A와 B의 교집합) 산출(employee_id) >> WHERE A.depth = B.depth ※JOIN ~ ON 아래에는 또다른 JOIN ~ ON문만 올 수 있다.(WHERE문 사용 불가) 
 */
