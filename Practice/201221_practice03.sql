@@ -182,7 +182,7 @@ WHERE   e.department_id = d.department_id(+)
                                             ON e.department_id = d.department_id >> 각 사원의 대한 정보를 출력하기 위한 것이므로 employees를 'e'로 정의해 기준으로 삼고
                                                                                     부서명을 불러오기 위해 departments를 'd'로 정의해 JOIN
 #2 e.manager_id = m.employee_id >> 첫번째 시도 LEFT OUTER JOIN employees m
-                                                ON e.manager_id = m.employee_id >> employees를 'e'로 정의해 기준으로 삼고 SELF JOIN해 각 사원명을 manger_id에 대입하여 관리자 산출
+                                                ON e.manager_id = m.employee_id >> employees를 'e'로 정의해 기준으로 삼고 SELF JOIN해 각 employee_id 데이터를 manger_id에 대입하여 관리자 산출
                                     실패 >> employees를 SELF JOIN 함으로써 manager_id 데이터는 갖지않지만(정확히는 NULL 데이터를 가졌다.), employees.employee_id 데이터를 가진 'Steven' 출력
                                 >> 두번째 시도 INNER JOIN employees m
                                                 ON e.manager_id = m.employee_id ↔ WHERE e.manager_id = m.employee_id WHERE문을 풀어보면, e.manager_id와 m.employee_id가 같으면 출력, 나머지 생략 즉, 교집합을 검사/산출
