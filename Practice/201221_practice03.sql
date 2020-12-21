@@ -179,7 +179,7 @@ WHERE   e.department_id = d.department_id(+)
         and e.manager_id = m.employee_id
 이를 JOIN문을 사용해 재정의
 #1 e.department_id = d.department_id(+) >> LEFT OUTER JOIN departments d
-                                            ON e.department_id = d.department_id >> 각 사원의 대한 정보를 출력하기 위한 것이므로 employees를 'e'로 정의해 기준으로 삼고
+                                            ON e.department_id = d.department_id >> 각 사원에 대한 정보를 출력하기 위한 것이므로 employees를 'e'로 정의해 기준으로 삼고
                                                                                     부서명을 불러오기 위해 departments를 'd'로 정의해 JOIN
 #2 e.manager_id = m.employee_id >> 첫번째 시도 LEFT OUTER JOIN employees m
                                                 ON e.manager_id = m.employee_id >> employees를 'e'로 정의해 기준으로 삼고 SELF JOIN해 각 employee_id 데이터를 manger_id에 대입하여 관리자 산출
