@@ -54,7 +54,7 @@ FROM    employees
 WHERE   salary < (SELECT    ROUND(AVG(salary),2)
                   FROM      employees);
 
--- 다중행 SubQuery > SubQuuery의 결과가 여러개의 Row인 경우
+-- 다중행 SubQuery > SubQuery의 결과가 여러개의 Row인 경우
 -- 부서번호가 '110'인 사원의 급여와 같은 모든 사원의 사번, 이름, 급여 출력
 SELECT  employee_id,
         first_name,
