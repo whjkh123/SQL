@@ -2,12 +2,22 @@
 
 /*
 문제 1.
-#1 평균 급여보다 적은 급여을 받는 직원은
+#1 평균급여보다 적은 급여을 받는 직원은
 #2 몇명인지 출력(56건)
 */
+-- step.1 >> 평균급여 조회
+SELECT  ROUND(AVG(salary),0)
+FROM    employees;
+
+-- step.2 >> 평균급여보다 적은 급여를 받는 직원 수 조회
 SELECT  COUNT(salary)
 FROM    employees
-WHERE   salary < (SELECT    AVG(salary)
+WHERE   salary < 6462;-- ROUND(AVG(salary),)
+
+-- step.3 >> JOIN
+SELECT  COUNT(salary)
+FROM    employees
+WHERE   salary < (SELECT    ROUND(AVG(salary),0)
                   FROM      employees);
 
 /*
@@ -16,15 +26,24 @@ WHERE   salary < (SELECT    AVG(salary)
 #2 직원번호(employee_id), 이름(first_name), 급여(salary), 평균급여, 최대급여를
 #3 급여의 오름차순정렬하여 출력(51건)
 */
+-- step.1 >> 평균급여 조회
+SELECT  ROUND(AVG(salary),0)
+FROM    employees;
+
+-- step.2 >> 최고급여 조회
+SELECT  MAX(salary)
+FROM    employees;
+
+-- step.3 >> JOIN
 SELECT  employee_id,
         first_name,
         salary,
-        AVG(salary),
+        ROUND(AVG(salary),0),
         MAX(salary)
 FROM    employees
-WHERE   salary >= (SELECT   AVG(salary)
+WHERE   salary >= (SELECT   ROUND(AVG(salary),0)-- 평균급여
                    FROM     employees)
-        and salary <= (SELECT   MAX(salary)   
+        and salary <= (SELECT   MAX(salary)-- 최고급여
                        FROM     employees)
 GROUP BY employee_id, salary, first_name
 ORDER BY salary asc;
@@ -56,13 +75,33 @@ WHERE   e.employee_id = d.manager_id
 #2 사번,이름,급여를
 #3 급여의 내림차순 출력 -ANY연산자 사용(74건)
 */
+-- step.1 >> 'ST_MAN'업무를 맡은 직원의 급여 조회
 SELECT  employee_id,
         first_name,
         salary
 FROM    employees
+WHERE   job_id = 'ST_MAN';
+
+-- step.2 >> JOIN
+SELECT  employee_id,
+        first_name,
+        salary,
+        job_id
+FROM    employees
 WHERE   salary <ANY (SELECT    salary
                      FROM      employees
                      WHERE     job_id = 'ST_MAN')
+ORDER BY salary desc;
+
+-- ※'ST_MAN'업무를 맡은 직원보다 적은 급여를 받는 직원을 조회하려면 기준은 최소값으로 잡아야하지 않을까?
+SELECT  employee_id,
+        first_name,
+        salary,
+        job_id
+FROM    employees
+WHERE   salary <ALL (SELECT salary
+                     FROM   employees
+                     WHERE  job_id = 'ST_MAN')
 ORDER BY salary desc;
 
 /*
@@ -101,6 +140,13 @@ WHERE   e.department_id = s.department_id
 #1 연봉 총합이 가장 높은 업무부터
 #2 업무명(job_title)과 연봉 총합을 조회(19건)
 */
+-- step.1 >> 각 업무별 연봉 총합
+SELECT  job_id,
+        SUM(salary)
+FROM    employees
+GROUP BY job_id;
+
+-- step.2 >> JOIN
 SELECT  job_title
 FROM    employees e, jobs j, (SELECT    job_id,
                                         SUM(salary) sumS
@@ -114,11 +160,18 @@ WHERE   e.job_id = j.job_id
 #1 자신의 부서 평균 급여보다 연봉(salary)이 많은 직원의
 #2 직원번호(employee_id), 이름(first_name)과 급여(salary)을 조회(38건)
 */
+-- step.1 >> 각 부서 평균급여 조회
+SELECT  department_id,
+        ROUND(AVG(salary),0) avgS
+FROM    employees
+GROUP BY department_id;
+
+-- step.2 >> JOIN
 SELECT  employee_id,
         first_name,
         salary
 FROM    employees e, (SELECT    department_id,
-                                AVG(salary) avgS
+                                ROUND(AVG(salary),0) avgS
                       FROM      employees
                       GROUP BY department_id) s
 WHERE   e.department_id = s.department_id
