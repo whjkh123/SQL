@@ -120,3 +120,23 @@ WHERE   salary >ALL-- AND연산자 >> salary > 12008
     (SELECT salary
      FROM   employees
      WHERE  department_id = 110);
+
+-- TABLE JOIN
+-- 각 부서별로 최고급여를 받는 사원 출력
+-- #1 각 부서별 최고급여 TABLE
+SELECT  department_id,
+        MAX(salary)
+FROM    employees
+GROUP BY department_id;
+
+-- #2 #1TABLE JOIN
+SELECT  e.department_id,
+        e.employee_id,
+        e.first_name,
+        e.salary
+FROM    employees e, (SELECT    department_id,
+                                MAX(salary) salary-- FROM employees e, salary s
+                      FROM      employees         -- where e.salary = s.salary{MAX(salary)};
+                      GROUP BY department_id) s
+WHERE   e.department_id = s.department_id
+        and e.salary = s.salary;
