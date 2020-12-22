@@ -45,6 +45,19 @@ WHERE   e.department_id = d.department_id(+)
         and e.job_id = j.job_id
 ORDER BY e.employee_id asc;
 
+-- 문제 2-1 LEFT OUTER JOIN 변형
+SELECT  e.employee_id 사번,
+        e.first_name 이름,
+        e.salary 급여,
+        d.department_name 부서명,
+        j.job_title 현재업무
+FROM    employees e
+LEFT OUTER JOIN departments d
+    ON  e.department_id = d.department_id
+INNER JOIN jobs j
+    ON  e.job_id = j.job_id
+ORDER BY e.employee_id asc;
+
 /*
 문제 3.
 도시별로 위치한 부서들을 파악하려고 합니다.
@@ -199,5 +212,6 @@ WHERE   e.department_id = d.department_id(+)
                                             INNER JOIN B
                                             ON A.depth = B.depth
                                             >> A ∩ B(A와 B의 교집합) 산출(m.employee_id) ↔ WHERE A.depth = B.depth
+                                            
                                             ※JOIN ~ ON문 아래에는 또다른 JOIN ~ ON문만 올 수 있다.(WHERE문 사용 불가) 
 */
