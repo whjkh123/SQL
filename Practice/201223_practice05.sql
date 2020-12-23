@@ -6,10 +6,10 @@
 #2 월급이 3000초과인 직원의 
 #3 이름, 매니저아이디, 커미션 비율, 월급 출력(45건)
 */
-SELECT  first_name,
-        manager_id,
-        commission_pct,
-        salary
+SELECT  first_name 이름,
+        manager_id 매니저ID,
+        commission_pct "커미션 비율",
+        salary 월급
 FROM    employees
 WHERE   salary > 3000
         and commission_pct is null
@@ -23,12 +23,12 @@ WHERE   salary > 3000
 #4 입사일은 2001-01-13 토요일 형식으로 출력
 #5 전화번호는 515-123-4567 형식으로 출력(11건)
 */
-SELECT  employee_id,
-        first_name,
-        salary,
-        TO_CHAR(hire_date, 'yyyy-mm-dd day'),
-        REPLACE(phone_number,'.','-'),
-        department_id
+SELECT  employee_id 사번,
+        first_name 이름,
+        salary 급여,
+        TO_CHAR(hire_date, 'yyyy-mm-dd day') 입사일,
+        REPLACE(phone_number,'.','-') 전화번호,
+        department_id 부서ID
 FROM    employees
 WHERE   (department_id, salary) IN (SELECT  department_id,
                                             MAX(salary)
@@ -115,10 +115,10 @@ FROM    (SELECT  e.employee_id,
          ORDER BY e.hire_date asc) et;
          
 -- step.3 >> 조건문 실행
-SELECT  rt.employee_id,
-        rt.first_name,
-        rt.department_name,
-        rt.hire_date
+SELECT  rt.employee_id 사번,
+        rt.first_name 이름,
+        rt.department_name 부서명,
+        rt.hire_date 입사일
 FROM    (SELECT  ROWNUM rown,
                  et.employee_id,
                  et.first_name,
@@ -143,9 +143,9 @@ SELECT  max(hire_date)
 FROM    employees;
 
 -- step.2 >> 가장 늦게 입사한 직원 조회
-SELECT  e.first_name || ' ' || e.last_name,
-        e.salary,
-        d.department_name
+SELECT  e.first_name || ' ' || e.last_name 이름,
+        e.salary 연봉,
+        d.department_name 부서명
 FROM    employees e, departments d
 WHERE   e.department_id = d.department_id
         and hire_date = (SELECT  max(hire_date)-- and hire_date = (가장 늦은 입사일)
