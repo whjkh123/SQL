@@ -6,7 +6,6 @@ SELECT  ROWNUM,-- 'ROWNUM' 명령어가 'ORDER BY' 보다 먼저 실행되어 �
         first_name,
         salary
 FROM    employees
-WHERE   ROWNUM BETWEEN 1 and 5
 ORDER BY salary desc;
 
 -- step.2
@@ -52,8 +51,7 @@ SELECT  ROWNUM,
         e.first_name,
         e.salary,
         e.hire_date
-FROM    (SELECT  ROWNUM,
-                 first_name,
+FROM    (SELECT  first_name,
                  salary,
                  hire_date
          FROM    employees
