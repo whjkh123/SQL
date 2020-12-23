@@ -176,3 +176,46 @@ FROM    employees e, (SELECT    department_id,
                       GROUP BY department_id) s
 WHERE   e.department_id = s.department_id
         and e.salary > s.avgS;
+
+/*
+문제 8.
+입사일이 11번째에서 15번째의 직원의 사번, 이름, 급여, 입사일을 입사일 순서로 출력
+*/
+-- step.1 직원들의 입사일을 조회하여 올림차순 정렬
+SELECT  employee_id,
+        first_name,
+        salary,
+        hire_date
+FROM    employees
+ORDER BY hire_date asc;
+
+-- step.2 'hire_date' 올림차순 정렬된 테이블에 'ROWNUM' 부여
+SELECT  ROWNUM,
+        e.employee_id,
+        e.first_name,
+        e.salary,
+        e.hire_date
+FROM    (SELECT  employee_id,
+                 first_name,
+                 salary,
+                 hire_date
+         FROM    employees
+         ORDER BY hire_date asc) e;
+
+-- step.3 step.1 ~ 2 작업을 마친 테이블을 로드하여 부여된 'ROWNUM'을(를) 'rown' 고정변수로 지정하여 조건문 시행
+SELECT  re.employee_id,
+        re.first_name,
+        re.salary,
+        re.hire_date
+FROM    (SELECT  ROWNUM rown,
+                 e.employee_id,
+                 e.first_name,
+                 e.salary,
+                 e.hire_date
+         FROM    (SELECT  employee_id,
+                          first_name,
+                          salary,
+                          hire_date
+                  FROM    employees
+                  ORDER BY hire_date asc) e) re
+WHERE   re.rown BETWEEN 11 and 15;
