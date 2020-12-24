@@ -133,6 +133,7 @@ FROM    (SELECT  ROWNUM rown,
                           and e.department_id = d.department_id
                   ORDER BY e.hire_date asc) et) rt
 WHERE   rt.rown BETWEEN 11 and 20;
+
 /*
 문제 6.
 #1 가장 늦게 입사한 직원의
@@ -156,6 +157,36 @@ WHERE   e.department_id = d.department_id
 #1 평균연봉(salary)이 가장 높은 부서
 #2 직원들의 직원번호(employee_id), 이름(firt_name), 성(last_name)과  업무(job_title), 연봉(salary) 조회
 */
+-- step.1 >> 부서별 평균급여 조회
+SELECT  ROUND(AVG(salary),0) avgs,
+        department_id
+FROM    employees
+GROUP BY department_id;
+
+-- step.2 >> 최고 평균급여 조회
+SELECT  MAX(avgs)
+FROM    (SELECT     ROUND(AVG(salary),0) avgs,
+                    department_id
+         FROM       employees
+         GROUP BY department_id);
+
+-- step.3 >> 최고 평균급여를 받는 부서의 직원 조회(department_id: 10, AVG(salary): 19333)
+SELECT  e.employee_id,
+        e.first_name,
+        e.last_name,
+        j.job_title,
+        e.salary
+FROM    employees e, jobs j, (SELECT    ROUND(AVG(salary),0) avgs,-- 각 부서별 평균급여
+                                        department_id
+                              FROM      employees
+                              GROUP BY department_id) d
+WHERE   e.job_id = j.job_id
+        and e.department_id = d.department_id
+        and d.avgs >= (SELECT     MAX(avgs)-- 각 부서별 평균급여 >= 최고 평균급여 >> 최고 평균급여를 받을 때 조건 충족
+                       FROM       (SELECT   ROUND(AVG(salary),0) avgs,
+                                            department_id
+                                   FROM     employees
+                                   GROUP BY department_id));
 
 /*
 문제 8.
