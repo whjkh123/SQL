@@ -2,7 +2,11 @@ SELECT
     *
 FROM    book;
 
+DELETE FROM book WHERE book_id = 1;
+
 DELETE FROM book WHERE author_id = 4;
+
+DELETE FROM book;
 
 CREATE TABLE book (book_id NUMBER(10),
                    title VARCHAR2(100),
@@ -11,10 +15,6 @@ CREATE TABLE book (book_id NUMBER(10),
                    author_id NUMBER(10),
                    PRIMARY KEY (book_id),
                    CONSTRAINT book_fk FOREIGN KEY (author_id) REFERENCES author(author_id));
-
-DELETE FROM book WHERE book_id = 1;
-
-DELETE FROM book;
 
 CREATE SEQUENCE seq_book_id INCREMENT BY 1 START WITH 1;
 
@@ -67,3 +67,6 @@ SELECT  b.book_id,
 FROM    book b, author a
 WHERE   b.author_id = a.author_id
 ORDER BY b.book_id asc;
+
+COMMIT;
+ROLLBACK;
